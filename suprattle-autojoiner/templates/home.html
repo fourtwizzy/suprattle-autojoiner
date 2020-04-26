@@ -1,0 +1,48 @@
+<html>
+    <head>
+        <title>AutoJoiner</title>
+        <link rel="icon" href="https://media.discordapp.net/attachments/578728790843326467/679822850273968216/logo_1.PNG?width=936&amp;height=936">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap" rel="stylesheet">
+    </head>
+    <body style="background-color: #EAEAEA; color:#3C3C3C; font-family:arial">
+        <h1 style="margin-top: 3%; margin-left: 5%; font-size: 40px;">AutoClick</h1>
+        <form>
+            <input style="outline:none; border:none; display:block; padding:5px; border-radius: 5px; margin-top: 4%; margin-left: 5%; font-size: 28px;" id="accessToken" placeholder="Access Token" type="text">
+            <input style="outline:none; border:none; display:block; padding:5px; border-radius: 5px; margin-top: 2%; margin-left: 5%; font-size: 28px;" id="channelId" placeholder="Channel ID" type="text">
+            <input style="outline:none; border:none; display:block; padding:5px; border-radius: 5px; margin-top: 2%; margin-left: 5%; font-size: 28px;" id="delay" placeholder="Delay" type="text">
+        </form>
+        <button id="start" style="display:inline; margin-left: 5%; background-color: #3C3C3C; color:#EAEAEA;border-radius: 5px;padding:10px;font-size: 30px; border: none; outline: none;" onclick="start()">Start</button>
+        <button id="stop" style="display:inline; margin-left: 1%; background-color: #3C3C3C; color:#EAEAEA;border-radius: 5px;padding:10px;font-size: 30px; border: none; outline: none;" onclick="stop()">Stop</button>
+        <a href="https://github.com/Tyrrrz/DiscordChatExporter/wiki/Obtaining-Token-and-Channel-IDs" style="display:block; text-decoration: none; margin-top: 2%; margin-left: 5%; color:#3C3C3C;">Chanel Id and Access Token</a> 
+        <a href="https://www.suprattle.com/donate" style="display:block;text-decoration: none; margin-top: 1%; margin-left: 5%; color:#3C3C3C;">Donate to Suprattle</a> 
+        <textarea id="log" style="margin-bottom:4%; margin-top:4%; margin-left:5%; outline:none; border:none; display:block; padding:5px; border-radius: 5px; font-family: arial;" cols="45" rows="10">Logs</textarea>   
+    </body>
+    <script>
+        function start() {
+            console.log("yes")
+            var time = new Date();
+            var timestamp = time.getFullYear()+'-'+(time.getMonth()+1)+'-'+time.getDate() + " " + time.getHours()+':'+time.getMinutes()+':'+time.getSeconds();
+            var accessToken = $("#accessToken").val()
+            var delay = $("#delay").val()
+            var channelId = $("#channelId").val()
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.open( "GET", "http://127.0.0.1:5384/start?accessToken="+accessToken+"&channelId="+channelId+"&delay="+delay, false );
+            xmlHttp.send( null );
+            var logText = $("#log").text()
+            $("#log").text(logText + "\nStarted - " + timestamp)
+            return
+        }
+
+        function stop() {
+            var time = new Date();
+            var timestamp = time.getFullYear()+'-'+(time.getMonth()+1)+'-'+time.getDate() + " " + time.getHours()+':'+time.getMinutes()+':'+time.getSeconds();
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.open( "GET", "http://127.0.0.1:5384/stop", false );
+            xmlHttp.send( null );
+            var logText = $("#log").text()
+            $("#log").text(logText + "&#13;&#10;Stopped - " + timestamp)
+            return
+        }
+    </script>
+</html>
