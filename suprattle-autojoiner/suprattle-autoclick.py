@@ -26,7 +26,10 @@ def start():
     try:
         delay = int(request.args.get("delay"))
     except:
-        pass
+        try:
+            delay = float(request.args.get("delay"))
+        except:
+            pass
     run = True
     print("Started")
     while run:
